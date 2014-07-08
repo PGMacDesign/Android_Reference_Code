@@ -3,11 +3,10 @@ private class VerySlowTask extends AsyncTask <String, Long, Void> {
 		
 		// can use UI thread here
 		protected void onPreExecute() {
-			startingMillis = System.currentTimeMillis();
-			editText.setText("Start Time: " + startingMillis);
 			//this.dialog.setMessage("Wait\nSome SLOW job is being done...");
 			//this.dialog.show();
-			Toast.makeText(getApplicationContext(), "Some SLOW work is being done!", Toast.LENGTH_SHORT).show();
+			//Or add toasts here, it will pop up
+
 		}
 		
 		// automatically done on worker thread (separate from UI thread)
@@ -16,8 +15,8 @@ private class VerySlowTask extends AsyncTask <String, Long, Void> {
 				
 				//STUFF YOU WANT DONE IN THE BACKGROUND GOES HERE
 				
-				}
-			} catch (InterruptedException e) {
+				
+			} catch (Exception e) {
 				//
 			}
 			return null;
@@ -32,18 +31,14 @@ private class VerySlowTask extends AsyncTask <String, Long, Void> {
 		
 		// can use UI thread here
 		protected void onPostExecute(final Void unused) {
-			if (this.dialog.isShowing()) {
-				this.dialog.dismiss();
-			}
+
 			// cleaning-up, all done
-			editText.append("\nEnd Time:"
-					+ (System.currentTimeMillis()-startingMillis)/1000 + " Seconds");
-			editText.append("\nDone!");
+			//Edit the EditTexts/ TextViews/ Images here
+			//IE image_view.setImageBitmap(bm);
 		}
 	}//AsyncTask
 	
-	
-}//ThreadsMessagesThreeAsyncTask
+
 
 
 
