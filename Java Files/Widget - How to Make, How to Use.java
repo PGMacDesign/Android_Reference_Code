@@ -1,8 +1,9 @@
 //Widgets - TONS of stuff here
 //First off, this code needs to go into your manifest
+//DO NOT FORGET TO CHANGE .MyWidget IF YOU CHOSE A DIFFERENT CLASS NAME!
 	<!-- Widget class  -->
 	<receiver 
-		android:name=".Name_Of_Your_Widget_Class_IE_MyWidget"
+		android:name=".MyWidget"
 		android:label="Name of Widget in Apps" 
 		>
 		<intent-filter>
