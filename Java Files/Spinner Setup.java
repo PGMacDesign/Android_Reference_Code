@@ -7,7 +7,7 @@
 		
 //This code goes in the Initialize() or onCreate() method
 	//Array Adapter for Spinner use with the daily tab
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, daily_paths); //The android.R.layout.simple_spinner_item is embedded system
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, color_choices); //The android.R.layout.simple_spinner_item is embedded system
 	
 	//Spinner setup
 		choice_spinner = (Spinner) findViewById(R.id.name_of_spinner_in_xml); 
