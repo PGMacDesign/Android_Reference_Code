@@ -1,5 +1,6 @@
 private class VerySlowTask extends AsyncTask <String, Long, Void> {
-	private final ProgressDialog dialog = new ProgressDialog(CLASS_NAME.this); //Not needed, but adding for pop up purposes
+	//Dialog box. Not needed, but adding for pop up purposes
+	private final ProgressDialog dialog = new ProgressDialog(CLASS_NAME.this); 
 		
 		// can use UI thread here
 		protected void onPreExecute() {
