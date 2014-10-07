@@ -18,7 +18,11 @@ AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				dialog.cancel();
 				//This will open up an intent when they click the "Show Me" option
 				Intent intent = new Intent("com.package.name.CLASSNAME");
-				startActivity(intent);		
+				startActivity(intent);	
+
+				//Or, use this for opening the internet
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW,Uri.parse(the_link));
+				startActivity(browserIntent);
 		   }
 		});
 	AlertDialog alert = builder.create();
