@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<cars>
+	<car>
+		<name>BMW</name>
+		<grade>A</grade>
+	</car>
+	<car>
+		<name>FORD</name>
+		<grade>B</grade>
+	</car>
+	<car>
+		<name>FIAT</name>
+		<grade>C</grade>
+	</car>
+</cars>
