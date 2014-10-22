@@ -1,4 +1,4 @@
-//Originally written on 2014-10-18
+package com.pgmacdesign.cameratest2;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -6,16 +6,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +32,7 @@ public class PictureDemo extends Activity {
 	private Camera camera=null;
 	private boolean inPreview=false;
 	private boolean cameraConfigured=false;
-
+	
 	private final static String DEBUG_TAG = "PhotoHandler Activity";
 
 	Bitmap bmp, bmp2;
@@ -42,39 +42,54 @@ public class PictureDemo extends Activity {
 	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		       
 		setContentView(R.layout.main2);
 
-		//camera.open();
-		L.m("Camera open in onCreate");
-		preview=(SurfaceView)findViewById(R.id.preview);
+		preview = (SurfaceView)findViewById(R.id.preview);
 		previewHolder = preview.getHolder();
 		previewHolder.addCallback(surfaceCallback);
 		previewHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+		
+		camera = Camera.open();
+
+		//Hides the action bar
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
+
+
+		//Popup a dialog after 6 seconds with option to start directions
+		Handler handler = new Handler(); 
+		handler.postDelayed(new Runnable() { 
+			 public void run() { 
+				 
+				 //
+				 finish();
+				 L.m("Finish called");
+				 //
+			 } 
+		}, (1000*6));
+		
+
 	}
 
-	@Override
-	public void onResume() {
-		super.onResume();
+	private void callWithoutClick(){
+		try {
+			
+			camera.setPreviewDisplay(previewHolder);
+			Camera.Parameters parameters=camera.getParameters();
+			setCameraResolution();
+			camera.setParameters(parameters);
+			cameraConfigured=true;
+			camera.startPreview();
+			inPreview = true;
+			preview.setVisibility(View.GONE);
+			camera.takePicture(null, null, photoCallback);
+			inPreview=false;
 
-		if (camera == null) {
-			camera=Camera.open();
-			L.m("Camera open in onResume");
+		} catch (Exception e) {
+			L.m("Exception Error", e.toString());
+			Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
 		}
-
-		startPreview();
-	}
-
-	@Override
-	public void onPause() {
-		if (inPreview) {
-			camera.stopPreview();
-		}
-
-		camera.release();
-		camera=null;
-		inPreview=false;
-
-		super.onPause();
 	}
 
 	@Override
@@ -84,74 +99,64 @@ public class PictureDemo extends Activity {
 		return(super.onCreateOptionsMenu(menu));
 	}
 
-	@Override
+	//This method is here in case I want to add a button in place for activation
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == R.id.camera) {
-			if (inPreview) {
-				L.m("Is this getting called?");
-				camera.takePicture(null, null, photoCallback);
-				inPreview=false;
-			}
+			callWithoutClick();
 		}
 			
 		return(super.onOptionsItemSelected(item));
 	}
 
-
-
-
-	private void initPreview(int width, int height) {
+	//Sets up the preview
+	private void initPreview() {
 		if (camera != null && previewHolder.getSurface() != null) {
 			try {
 				camera.setPreviewDisplay(previewHolder);
 			}
 			catch (Throwable t) {
-				Log.e("PreviewDemo-surfaceCallback",
-						"Exception in setPreviewDisplay()", t);
-				Toast.makeText(PictureDemo.this, t.getMessage(),
-						Toast.LENGTH_LONG).show();
+				Log.e("PreviewDemo-surfaceCallback", "Exception in setPreviewDisplay()", t);
+				Toast.makeText(PictureDemo.this, t.getMessage(), Toast.LENGTH_LONG).show();
 			}
 			
 			if (!cameraConfigured) {
 				Camera.Parameters parameters=camera.getParameters();
-				
 				setCameraResolution();
 				
-				//parameters.setPictureFormat(ImageFormat.JPEG); //Maybe not need...
 				camera.setParameters(parameters);
 				cameraConfigured=true;
 			}
-			
 		}
 	}
 	
+	//Starts the preview
 	private void startPreview() {
-  		if (cameraConfigured && camera != null) {
-  			camera.startPreview();
+		if (cameraConfigured && camera != null) {
+			camera.startPreview();
   			inPreview=true;
   		}
   	}
 
+	//Surface holder to handle the surface management
 	SurfaceHolder.Callback surfaceCallback=new SurfaceHolder.Callback() {
 		public void surfaceCreated(SurfaceHolder holder) {
-			// no-op -- wait until surfaceChanged()
+			callWithoutClick(); //Calls the camera to take action
 		}
 
-		public void surfaceChanged(SurfaceHolder holder, int format,
-                               int width, int height) {
-			initPreview(width, height);
+		public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+			initPreview();
 			startPreview();
+			preview.setVisibility(View.GONE);   //This hides the view from the user
 		}
 
 		public void surfaceDestroyed(SurfaceHolder holder) {
-			// no-op
+			
 		}
 	};
 
-	Camera.PictureCallback photoCallback=new Camera.PictureCallback() {
+	//PhotoCallback to handle the picture callback
+	Camera.PictureCallback photoCallback = new Camera.PictureCallback() {
 		public void onPictureTaken(byte[] data, Camera camera) {
-      
-			//new SavePhotoTask().execute(data); //Will likely have to call this method as an Async, but for now, removing
 			File pictureFileDir = getDir();
 
 			//If there is a problem with the image...
@@ -193,7 +198,7 @@ public class PictureDemo extends Activity {
 				 * 2) Quality. 0 being VERY low quality and 100 being highest quality
 				 * 3) The File output stream being used to write the data
 				 */
-				bmp.compress(Bitmap.CompressFormat.JPEG, 91, fos);
+				bmp.compress(Bitmap.CompressFormat.JPEG, 100, fos);
 				//Flush the stream
 				fos.flush();
 				//Close the stream
@@ -209,11 +214,6 @@ public class PictureDemo extends Activity {
 				Log.d(DEBUG_TAG, "File" + filename + "not saved: " + error.getMessage());
 				Toast.makeText(getApplicationContext(), "Image could not be saved.", Toast.LENGTH_LONG).show();
 		    }
-    	//
-    	//
-			camera.startPreview();
-			inPreview=true;
-    	
 		}
 	};
 
@@ -225,17 +225,9 @@ public class PictureDemo extends Activity {
 	    return new File(toDCIM, "Silent Camera");
 	}
 	
-	class SavePhotoTask extends AsyncTask<byte[], String, String> {
-		@Override
-		protected String doInBackground(byte[]... jpeg) {
-    	
-
-			return(null);
-		}
-	}
-  
-	//For rotating 
+	//For rotating photo to the correct side
 	public static Bitmap rotateImage(Bitmap b, int degrees) {
+
 		if (degrees != 0 && b != null) {
 			Matrix m = new Matrix();
 		    m.setRotate(degrees, (float) b.getWidth() / 2, (float) b.getHeight() / 2);
@@ -302,4 +294,32 @@ public class PictureDemo extends Activity {
    		L.m("Resolution = " + aResolution);
    		L.m("Megapixels = " + megaPixels);	
    	}
+   	
+   	
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+		if (camera == null) {
+			//camera = Camera.open();
+			L.m("Camera open in onResume");
+		}
+		startPreview();
+	}
+
+	@Override
+	public void onPause() {
+		if (inPreview) {
+			camera.stopPreview();
+		}
+
+		camera.release();
+		camera=null;
+		inPreview=false;
+
+		super.onPause();
+	}
+
+	
 }
