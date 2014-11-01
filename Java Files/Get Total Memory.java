@@ -7,3 +7,6 @@ public static int TotalMemory() {
 	
 	return Total;
 }
+
+//Use like this:
+int mem_used = TotalMemory();

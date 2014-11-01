@@ -9,3 +9,6 @@ public static int BusyMemory() {
 	
 	return Busy;
 }
+
+//Use Like this
+int busy_memory = BusyMemory();
