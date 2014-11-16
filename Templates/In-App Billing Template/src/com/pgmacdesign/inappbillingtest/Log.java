@@ -11,7 +11,7 @@ public class Log {
     private static final String TAG = "Hey, Listen!";
 
     public static void d(String msg) {
-        android.util.Log.d(TAG, msg);
+        android.util.Log.v(TAG, msg);
     }
 
 }
