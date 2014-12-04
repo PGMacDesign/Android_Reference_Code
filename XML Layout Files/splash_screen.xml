@@ -7,5 +7,6 @@
     tools:context=".Main"
     android:background="@drawable/enter_name_of_photo_or_background_image_here"
     >
+    <!-- This picture will cover the majority of the space. May need to rework the spacing if you want to add text -->
 
 </LinearLayout>
