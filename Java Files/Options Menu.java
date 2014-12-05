@@ -36,7 +36,8 @@ the menu button.
 		case R.id.send_Bug_Report:
 			//Do bug reporting stuff
 			//Send an email, log something, enter info to database, create an intent
-			startActivity(intent3);	
+			Intent emailIntent = new Intent();
+			startActivity(emailIntent);	
 			break;
 						
 		case R.id.Exit:
