@@ -11,23 +11,17 @@ public class Patient {
 	public String gender;
 	@SerializedName("dateOfBirth")
 	public String date_of_birth;
-
-	public class LastReading{
-		public String value;
-		public String units;
-		public String date_time;
-	}
-
-	public class TargetRange{
-		public String low;
-		public String high;
-	}
-
 	public String last_reading_range;
-
 	@SerializedName("photoUrl")
 	public String photo_url;
 	@SerializedName("photoDate")
 	public String photo_date;
 
+	/*
+	These 2 objects pull from other classes with the same organizational structure as this one. 
+	The ideas is that this class is the parent JSONObject and these 2 classes are
+	Sub-classes of this one and can be referenced by GSON when made as an object this way.
+	*/
+	public LastReading lastReading;
+	public TargetRange targetRange;
 }
