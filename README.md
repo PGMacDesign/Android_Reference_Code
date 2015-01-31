@@ -7,4 +7,4 @@ Things I will include:
 1) Java Files
 2) XML Files
 3) Templates
-4) Useful groupings of code (IE, ones that go together)
+4) Groupings of related sections (IE JSON Parsing or Storage systems)
