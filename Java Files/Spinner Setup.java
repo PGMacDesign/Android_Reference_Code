@@ -9,6 +9,10 @@
 	//Array Adapter for Spinner use with the daily tab
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, color_choices); //The android.R.layout.simple_spinner_item is embedded system
 	
+	//If accessing an array from your values.xml class (IE a string array) use this:
+		Resources res = getResources();
+		ArrayAdapter adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, res.getStringArray(R.array.name_of_array_in_values.xml) );
+	
 	//Spinner setup
 		choice_spinner = (Spinner) findViewById(R.id.name_of_spinner_in_xml); 
 		choice_spinner.setAdapter(adapter);
