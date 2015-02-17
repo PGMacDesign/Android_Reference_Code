@@ -47,7 +47,7 @@
 		endTime.getTimeInMillis());
 
 		
-		//Puts event into calendar
+		//Puts event into calendar. Once they click 'save' on the calendar event, it should bring it back to this activity
 		startActivity(calIntent); 
 	}
 	
