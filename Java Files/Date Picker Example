@@ -1,0 +1,29 @@
+//Date Picker Dialog example. Will pop up the datepicker and take in the response of the user
+		String date_time = null;
+		DatePickerDialog.OnDateSetListener datePicker = new DatePickerDialog.OnDateSetListener() {
+
+			@Override
+			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+				myCalendar.set(Calendar.YEAR, year);
+				myCalendar.set(Calendar.MONTH, monthOfYear);
+				myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+				try {
+					String myFormat = "MM/dd/yyyy"; //For the user's eyes
+					SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+					date_time = sdf.format(myCalendar.getTime());
+				} catch (Exception e){
+					L.toast(getApplicationContext(), "Error with date parsing...");
+					e.printStackTrace();
+				}
+			}
+		};
+
+		new DatePickerDialog(SignUp.this, datePicker, myCalendar
+				.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+				myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+				
+				
+		//When finished, the String date_time will hold the value for the date picked (in format MM/dd/yyyy). Can set other variables here, IE a text view or something else.
+		
