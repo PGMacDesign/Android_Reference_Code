@@ -10,5 +10,3 @@ Things I will include:
 4) Groupings of related sections (IE JSON Parsing or Storage systems)
 
 XML Templates (They will be in folders) are on the way!
-
--Updated on 2015-05-19. Adding in new computer for link. 
