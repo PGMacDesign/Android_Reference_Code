@@ -1,3 +1,10 @@
+//Include these imports as it will ask for multiple types. These are the correct ones:
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
+import android.net.Uri;
+import android.os.Bundle;
+
 //Rotate a photo file IF NEEDED
 
     /**
@@ -76,8 +83,16 @@
 		return 0;
 	}
 
-//Your main method where you are calling the rotations from
-public void someMethod(){
+/**
+ * Handles the results from onActivity Result calls (IE take pictures or use existing)
+ * @param requestCode
+ * @param resultCode
+ * @param imageReturnedIntent
+ */
+@Override
+public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+	super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
 	//First get your bitmap, whether it was created or whatnot. This assumes it is already made and not null
 	
 	Bitmap imageBitmap; //This is already assumed to be assigned to a bitmap. NOT NULL
@@ -92,4 +107,4 @@ public void someMethod(){
 	//Bitmap is now rotated (If needed) and resized)
 	//Do stuff with imageBitmap
 
-}
+}	
