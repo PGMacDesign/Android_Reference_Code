@@ -82,6 +82,28 @@ import android.os.Bundle;
 		else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
 		return 0;
 	}
+	
+	/**
+	 * This will force rotate a photo rotation. Useful for a button to allow the user to rotate the image manually
+	 * @param source
+	 * @param angle
+	 * @return
+	 */
+	public static Bitmap forceRotate(Bitmap source, float angle)
+	{
+		Bitmap bitmap = source;
+
+		try {
+			Matrix matrix = new Matrix();
+			matrix.postRotate(angle);
+			bitmap = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+		} catch (OutOfMemoryError e){
+			e.printStackTrace();
+		} catch (Error e){
+			e.printStackTrace();
+		}
+		return bitmap;
+	}
 
 /**
  * Handles the results from onActivity Result calls (IE take pictures or use existing)
