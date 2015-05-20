@@ -1,0 +1,95 @@
+//Rotate a photo file IF NEEDED
+
+    /**
+	 * Rotates an image
+	 * @param bitmap
+	 * @param orientation the angle to rotate it (IE 90 or 180)
+	 * @return
+	 */
+	public static Bitmap rotateMyPhoto(Bitmap bitmap, int orientation) {
+
+		Matrix matrix = new Matrix();
+		switch (orientation) {
+			case ExifInterface.ORIENTATION_NORMAL:
+				return bitmap;
+			case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+				matrix.setScale(-1, 1);
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_180:
+				matrix.setRotate(180);
+				break;
+			case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+				matrix.setRotate(180);
+				matrix.postScale(-1, 1);
+				break;
+			case ExifInterface.ORIENTATION_TRANSPOSE:
+				matrix.setRotate(90);
+				matrix.postScale(-1, 1);
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_90:
+				matrix.setRotate(90);
+				break;
+			case ExifInterface.ORIENTATION_TRANSVERSE:
+				matrix.setRotate(-90);
+				matrix.postScale(-1, 1);
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_270:
+				matrix.setRotate(-90);
+				break;
+			default:
+				return bitmap;
+		}
+		try {
+			Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+			bitmap.recycle();
+			return bmRotated;
+		}
+		catch (OutOfMemoryError e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Resizes the bitmap to fit into a smaller screen area
+	 * @param bitmap
+	 * @return
+	 */
+	public static Bitmap resizeMyPhoto(Bitmap bitmap){
+		L.m("Photo Resize Called");
+		Bitmap returned_bitmap = null;
+		int nh = (int) ( bitmap.getHeight() * (512.0 / bitmap.getWidth()) );
+		returned_bitmap = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
+		return  returned_bitmap;
+	}
+
+
+	/**
+	 * Converts the exif orientation to degrees
+	 * @param exifOrientation
+	 * @return
+	 */
+	public static int exifToDegrees(int exifOrientation) {
+		if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) { return 90; }
+		else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {  return 180; }
+		else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
+		return 0;
+	}
+
+//Your main method where you are calling the rotations from
+public void someMethod(){
+	//First get your bitmap, whether it was created or whatnot. This assumes it is already made and not null
+	
+	Bitmap imageBitmap; //This is already assumed to be assigned to a bitmap. NOT NULL
+	
+	Uri selectedImageUri = imageReturnedIntent.getData(); //URI of the image
+	exif = new ExifInterface(selectedImageUri.getPath());
+	int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+	int rotationInDegrees = PhotoEditing.exifToDegrees(rotation);
+	imageBitmap = PhotoEditing.resizeMyPhoto(imageBitmap);
+	imageBitmap = PhotoEditing.rotateMyPhoto(imageBitmap, rotationInDegrees);
+	
+	//Bitmap is now rotated (If needed) and resized)
+	//Do stuff with imageBitmap
+
+}
