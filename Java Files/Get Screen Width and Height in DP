@@ -1,0 +1,48 @@
+
+
+import android.content.Context;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+
+/**
+ * This class helps to determine the screen height and width in Density Pixels (DP)
+ */
+public class DisplayManagerUtility {
+
+	//Display display;
+	DisplayMetrics outMetrics;
+	WindowManager windowManager;
+	private float density;
+	private float dpWidth;
+	private float dpHeight;
+
+	/**
+	 * This will get the width and height of the screen in DP. This constructor is used to define
+	 * the instance variables and set them while the other methods are used as accessor/ getters. 
+	 * @param context Context from activity would be 'this' and from fragment would be 'getActivity()'
+	 */
+	public DisplayManagerUtility(Context context){
+		outMetrics = new DisplayMetrics();
+		windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		windowManager.getDefaultDisplay().getMetrics(outMetrics);
+		density  = (int)(outMetrics.density * 160f);
+		dpWidth  = outMetrics.widthPixels / density;
+		dpHeight = outMetrics.heightPixels / density;
+	}
+
+	/**
+	 * Gets the width of the screen in DP
+	 * @return returns a float
+	 */
+	public float getScreenWidth(){
+		return dpWidth;
+	}
+
+	/**
+	 * Gets the height of the screen in DP
+	 * @return returns a float
+	 */
+	public float getScreenHeight(){
+		return dpHeight;
+	}
+}
