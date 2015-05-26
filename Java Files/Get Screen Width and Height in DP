@@ -1,4 +1,13 @@
-
+/*
+NOTE! Set this up in the respective activity / fragment like this:
+		
+	dmUtil = new DisplayManagerUtility(this); //If Activity
+	dmUtil = new DisplayManagerUtility(getActivity()); //If Fragment
+		
+To Use it, an example would be:
+	//This would set a textView to 85% of the screeen width. Change the float at the end to change %
+	yourTextView.setMaxWidth((int)(dmUtil.getScreenWidth()*.85));
+*/
 
 import android.content.Context;
 import android.util.DisplayMetrics;
