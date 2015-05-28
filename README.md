@@ -7,6 +7,6 @@ Things I will include:
 1) Java Files
 2) XML Files
 3) Templates
-4) Groupings of related sections (IE JSON Parsing or Storage systems)
+4) Groupings of related sections (IE JSON Parsing / Storage systems)
 
 XML Templates (They will be in folders) are on the way!
