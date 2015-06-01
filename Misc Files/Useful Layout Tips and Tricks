@@ -1,0 +1,115 @@
+//XML Examples of useful layout tricks:
+
+ImageView
+
+
+1
+android:adjustViewBounds="true"
+This one’s a manual fix for “optimized” code in scaleType="fitCenter". Basically when Android adds an image resource to the ImageView it tends to get the width & height from the resource instead of the layout. This can cause layouts to reposition around the full size of the image instead of the actual viewable size.
+
+AdjustViewBounds forces Android to resize the ImageView to match the resized image prior to laying everything else out. There are times where this calculation won’t work, such as when the ImageView is set to layout_width="0dip". If it’s not working, wrap the ImageView in a RelativeLayout or FrameLayout which handles the 0dip flexible size instead.
+
+TextArea
+
+
+1
+2
+android:singleLine="true"
+android:maxLines="1"
+In the old days, singleLine was pretty straightforward and powerful. But now it’s (mostly) deprecated and you should use maxLines="1". Unfortunately, maxLines is weak in comparison. The biggest advantage is that singleLine would ignore carriage returns (\n) and place all text on a single line, sometimes even squeezing text together. MaxLines doesn’t bother.
+
+Although singleLine is deprecated, it’s still in heavy use in older Android apps on old Android phones so it’s not really going away. But it has been long abandoned and tends to break in unexpected ways. Use maxLines whenever you can and singleLine only when you must.
+
+ 
+
+
+1
+android:gravity="left"
+Most Android programmers read & write in left to right (LTR) languages so we presume text should be left to right. However Android is growing and being used by many right to left (RTL) languages these days. The good news is that Android auto-formats for RTL users. But in some cases, such as decorative layouts, your text is specifically meant to be LTR.
+
+To be clear, you should NOT use gravity="left" everywhere. For general text areas & forms you should leave the setting alone and let Android figure it out. But if you’re doing something decorative, you’ll want to think about gravity="left", because otherwise Android will make it RTL for those users.
+
+ 
+
+
+1
+android:gravity="right|center_vertical"
+Another quirk in Android layouts is that TextArea gravity can have multiple values separated by a | pipe. In this case, gravity="right|center_vertical" will give you text aligned to then and centered vertically (i.e. between top & bottom).
+
+ 
+
+
+1
+android:textAllCaps="true"
+Another useful decorative setting. I just did a new widget pack that follows JellyBean’s all caps text style. Initially, I used code to convert strings to upper case, but then I discovered this setting. Since the caps were strictly decorative it was proper to assign caps in the layout XML instead of the code.
+
+ 
+
+
+1
+android:lineSpacingMultiplier="0.9"
+While there’s no way to do kerning in Android, you can at least do line spacing. 1 is the default and the values work as multiples. 0.9 will give you usefully tight vertical spacing. Anything lower and you’ll get overlapping text. More than 1 will give you extra space between lines.
+
+ 
+
+
+1
+2
+android:ellipsize="none"
+android:ellipsize="end"
+The plural of ellipsis is “ellipses”, but whatever…
+
+Android has a nasty habit of inserting an ellipsis at the end of text when there’s limited room. Sometimes it even substitutes an ellipsis for the last letter!
+
+It’s probably a good idea to remove this feature by inserting ellipsize="none" into your TextAreas. If you want something readable with a nice fade, use ellipsize="end" instead.
+
+ 
+
+
+1
+android:includeFontPadding="false"
+When you’re using large fonts, you’ll end up with a lot of forced padding around them. This setting should remove the extra padding, but it’s pretty inconsistent and depends on how well the fonts were designed. I get very different results between Adobe fonts and Google’s Roboto fonts.
+
+ 
+
+
+1
+android:layout_marginBottom="-4dp"
+Negative margin values can also be a good workaround for too much text padding.
+
+ 
+
+General Layouts
+
+
+1
+2
+3
+android:weightSum="1"
+android:layout_weight="0.5"
+android:layout_weight="0.5"
+WeightSum and layout_weight are Android’s way of doing percent-based layout area. Each layout’s weight is added up to complete the weightSum of the area.
+
+The best way to use weightSum and layout_weight is to always use a weightSum of 1 and use decimal percentages 0.0 – 1.0 for the weights. Any other weightSum sizing pattern will simply confuse and annoy other developers down the road.
+
+ 
+
+
+1
+2
+android:layout_width="0dip"
+android:layout_weight="1"
+
+1
+2
+android:layout_height="match_parent"
+android:layout_weight="1"
+The common setting for stretchable layouts is  layout_width / layout_height set to match_parent. But when you want it to fit around another container, the Android sdk recommends you use 0dip instead of match_parent. I recommend using 0dip so it’s easier to differentiate partial layouts from full-size layouts. It also reduces excessive nanny clutter IDE warnings. I also prefer using dip instead of dp so I know it’s hack code and not a real size (since I rarely use dip sizes).
+
+There are some very old pieces of the Android sdk that still don’t recognize 0dip for auto-sizing so sometimes you’ll still need to use match_parent. If you do and if you’re splitting the area among more than one resizable container, be sure that they all use match_parent. You can’t mix & match 0dip with match_parent.
+
+Layout_weight is the other critical part in making a container fill in the remaining space around another container. The default weight for all containers is 0. Containers with a layout_weight of 0 get placed first, followed by increasing weights until the highest weight gets placed last (in theory). You can assign a layout_weight as low or high as you want, but in practice you should only use 1.
+
+You can also assign two or more containers each to have layout_weight="1" and Android will split the available area between the layouts of the same weight. You don’t need to use weightSum if you want them to be spaced equally.
+
+You can also use weight values to prioritize fill area. For example, if you assign one layout as layout_weight="1" and another as layout_weight="2", then the second layout will get half as much area as the first layout. WeightSum will add up the total weights and divide accordingly. Just remember to use 0dip for your size.
