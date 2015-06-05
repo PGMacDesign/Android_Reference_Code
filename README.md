@@ -9,4 +9,4 @@ Things I will include:
 3) Templates
 4) Groupings of related sections (IE JSON Parsing / Storage systems)
 
-XML Templates (They will be in folders) are on the way!
+XML Templates (They should be in folders) are on the way!
