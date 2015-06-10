@@ -1,0 +1,19 @@
+//If you are nesting a recyclerview inside a scrollview (NOT RECOMMENDED BTW), use this code to make it so that the recyclerView will stil be able to scroll when selected. Also, don't forget to set a definitive height (IE 200dp) for the recyclerview
+
+        nameOfRecyclerObject.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                int action = e.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_MOVE:
+                        rv.getParent().requestDisallowInterceptTouchEvent(true); //Here is key
+                        break;
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            }
+        });
