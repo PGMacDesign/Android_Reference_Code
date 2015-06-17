@@ -2,7 +2,7 @@
 
 //Call this wherever
 callFinishAfter(10); //This basically means that 10 seconds after this method is called, the app will close (finish()) and it will close it. Code can be altered within the run() method if need be
-
+//If you need context (common in this example) pass in a context argument as well
 public void callFinishAfter(int seconds){
 	L.m("Seconds total: " + 1000*seconds);
 	Handler handler = new Handler(); 
