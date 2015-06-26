@@ -1,0 +1,4 @@
+/*
+This library is mostly used for database setup. It performs most of the low level operations and allows you to not focus so 
+much on DB nuances and just write insert, delete, update, and retrieve queries.
+*/
