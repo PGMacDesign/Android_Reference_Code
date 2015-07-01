@@ -1,0 +1,79 @@
+
+//Creating Objects, Tables, and Columns.
+/*
+When you normally define a POJO (Plain old Java Object) you write it with private variables, a constructor, and some setters and getters; luckily, this works off the same principal. See my example code below for more details:
+*/
+
+public class Employee extends RealmObject {
+     
+    @PrimaryKey
+    private String id;
+    private String name;
+    private int age;
+    private double salary;
+    private boolean manager;
+    @Ignore
+    private String notesAboutEmployee;
+ 
+    public Employee(){}
+     
+    public String getId() {
+        return id;
+    }
+ 
+    public void setId(String id) {
+        this.id = id;
+    }
+ 
+    public String getName() {
+        return name;
+    }
+ 
+    public void setName(String name) {
+        this.name = name;
+    }
+ 
+    public int getAge() {
+        return age;
+    }
+ 
+    public void setAge(int age) {
+        this.age = age;
+    }
+ 
+    public String getNotesAboutEmployee() {
+        return notesAboutEmployee;
+    }
+ 
+    public void setNotesAboutEmployee(String notesAboutEmployee) {
+        this.notesAboutEmployee = notesAboutEmployee;
+    }
+ 
+    public void setSalary(double salary) {
+        this.salary= salary;
+    }
+ 
+    public double setSalary() {
+        return salary;
+    }
+ 
+    public void setManager(boolean isManager) {
+        this.notesAboutEmployee = notesAboutEmployee;
+    }
+ 
+    public boolean getManager() {
+        return manager;
+    }
+}
+
+/*
+As you can see from above, the Class is for employees. It has standard information like their name, age, and ID number. It also contains a ‘notes’ section, which we don’t want in the database, so we will simply just add the @Ignore annotation to it and it will be omitted from the database. I want the table to be organized via the ID number so I make the @PrimaryKey annotation over the id String. Lastly, you will notice that in the class declaration, we extend RealmObject. This is a MUST for this type of database management library.
+
+Now, if you are like me, you probably asked 2 questions right away;
+First, what if I need to extend something OTHER than RealmObject like MyApplication for context purposes?
+Second (Though only more obvious after you read the answer), will this change any behavior with my setters and getters?
+To answer the first question, no problem. You simply make the super class of MyApplication extend RealmObject instead; it carries it with it via inheritance.
+To answer the second question, YES, With the way this Realm Library works, you will need to change your normal logic a bit. As I will show in another post, there are multiple ways you can write to the database, but if you plan to set the object before writing it, you CANNOT have the setter methods do anything in their method other than just setting the variable. Let’s look at a quick example below.
+
+Say you want to make it where anyone who has a salary of >$100,000 is a manager (hopefully normal companies DON’T use this method) so rather than just calling the setManager method every time, you think, “I can just write an if else statement in the setSalary method that will check if the argument is >100000; if it is, set the boolean to true, else, set it to false”. Under normal circumstances, this would be fine, but with how this library is setup, the boolean will never get written. Morale of the story here is that you should utilize the setters as opposed to building in shortcuts that will set other setters for you.
+*/
