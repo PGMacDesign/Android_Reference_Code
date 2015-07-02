@@ -1,0 +1,28 @@
+//This is an example of the first way to insert data into the database using Realm. There are a total of 3 ways. 
+public static void insertIntoDB(Context context) {
+    //Method 1, create an object of realm, use it, set it.
+    try { 
+        //Create the object
+        Realm realm = Realm.getInstance(context);
+        realm.beginTransaction();
+         
+        //Create a realm object. As long as your class extends 
+        //RealmObject, this will work just fine.
+        Employee newEmployee = realm.createObject(Employee.class);
+         
+        //Set the data you want to here
+        newEmployee.setId("12345A");
+        newEmployee.setName("Bob Thompson");
+        newEmployee.setAge(35);
+        newEmployee.setSalary(99999.99);
+        newEmployee.setManager(false);
+         
+        //Lastly, commit the transaction and then close 
+        //the open realm to prevent memory leaks
+        realm.commitTransaction();
+        if (realm != null) {
+            realm.close();
+        }
+    } catch (Exception e){
+    }
+}
