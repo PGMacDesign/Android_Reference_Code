@@ -1,0 +1,28 @@
+//This method uses a closes system (an execute statement) to process transactions. You call all of the set methods on to the newEmployee object within it.
+public static void insertIntoDB(Context context) {
+    //Method 2, set the data from within a transaction execution
+    try { 
+        Realm realm = Realm.getInstance(context);
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+ 
+        //Create a realm object. As long as your class extends 
+        //RealmObject, this will work just fine.
+        Employee newEmployee = realm.createObject(Employee.class);
+ 
+        //Set the data you want to here
+        newEmployee.setId("12345A");
+        newEmployee.setName("Bob Thompson");
+        newEmployee.setAge(35);
+        newEmployee.setSalary(99999.99);
+        newEmployee.setManager(false);
+            }
+        });
+ 
+        if (realm != null) {
+            realm.close();
+        }
+    } catch (Exception e){
+    }
+}
