@@ -1,0 +1,21 @@
+//Third method of insertion, uses copy object
+//Notice the different parameters required here 
+public static void insertIntoDB(Context context, Employee passedObject){
+    try { //Method 2, take an existing object and copy it over
+             
+        //Create the enclosed instance first
+        Realm realm = Realm.getInstance(context);
+        realm.beginTransaction(); //Start the transaction
+         
+        //Create a realm object using the passedObject argument
+        Employee newEmployee = realm.copyToRealm(passedObject);
+         
+        realm.commitTransaction(); //End the transaction
+ 
+ 
+        if (realm != null) {
+            realm.close();
+        }
+    } catch (Exception e){
+    }
+}
