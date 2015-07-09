@@ -1,0 +1,12 @@
+    public static <E extends RealmObject> List<E> queryTheDatabase(RealmQuery<E> passedQuery) {
+        //Returned List of results
+        RealmResults<E> results = passedQuery.findAll();
+
+        //To sort, use one of the following examples (either ascending or descending. 
+        //If you omit the second parameter, it assumes ascending)
+        queryResults.sort("age"); // Sort ascending
+        queryResults.sort("id", RealmResults.SORT_ORDER_ASCENDING);
+        queryResults.sort("name", RealmResults.SORT_ORDER_DESCENDING);
+
+        return results;
+    }
