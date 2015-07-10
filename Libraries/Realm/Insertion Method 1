@@ -1,9 +1,11 @@
 //This is an example of the first way to insert data into the database using Realm. There are a total of 3 ways. 
-public static void insertIntoDB(Context context) {
+public static void insertIntoDB(Realm realm) {
     //Method 1, create an object of realm, use it, set it.
     try { 
-        //Create the object
-        Realm realm = Realm.getInstance(context);
+        /*
+        Make sure that if you are calling the begin transaction OUTISDE of this method, omit this line. 
+        Nested transactions are not allowed in Realm
+        */
         realm.beginTransaction();
          
         //Create a realm object. As long as your class extends 
