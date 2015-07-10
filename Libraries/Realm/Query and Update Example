@@ -1,0 +1,29 @@
+//This example queries the database, updates the returned records, and then writes them back into the database.
+
+public static void queryAndUpdateExample(Realm realm){
+    RealmQuery<Employee> query = realm.where(Employee.class);
+  
+    //Now define the parameters that salary is greater than/ = to $99,999
+    query.greaterThanOrEqualTo("salary", 99998.99);
+  
+    //Get the results into a list (Using previous post's code):
+    List<Employee> returnedList = queryTheDatabase(query);
+  
+    //Next cycle through the list to update results (No enhanced for loop here)
+    for(int i=0; i<returnedList.size(); i++){
+        //As we are changing data, we need to open a transaction here
+        realm.beginTransaction();
+        //Get an object from the returnedList
+        Employee currentEmployee = returnedList.get(i);
+        //Set the new salary
+        currentEmployee.setSalary(100000);
+        //Lastly, update the DB (Using previous post's code):
+        insertIntoDB(realm, currentEmployee);
+        realm.commitTransaction();
+    }
+  
+    //Close to prevent leaks
+    if(realm != null){
+        realm.close();
+    }
+}
