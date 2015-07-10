@@ -1,8 +1,7 @@
 //This method uses a closes system (an execute statement) to process transactions. You call all of the set methods on to the newEmployee object within it.
-public static void insertIntoDB(Context context) {
+public static void insertIntoDB(Realm realm) {
     //Method 2, set the data from within a transaction execution
     try { 
-        Realm realm = Realm.getInstance(context);
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
