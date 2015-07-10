@@ -1,19 +1,21 @@
 //This is the simplified version which uses generics, making for more condensed / modular code.
 
-public static <E extends RealmObject> void insertIntoDB(Context context, E passedObject) {
+public static <E extends RealmObject> void insertIntoDB(Realm realm, E passedObject) {
 
         try {
-            //Generate a realm object from the context
-            Realm realm = Realm.getInstance(context);
-            realm.beginTransaction(); //Open the transaction
+                /*
+                Make sure that if you are calling the begin transaction OUTISDE of this method, omit this line. 
+                Nested transactions are not allowed in Realm
+                */
+                realm.beginTransaction(); //Open the transaction
 
-            //Create a realm object using the passedObject argument
-            RealmObject writtenToDatabase = realm.copyToRealm(passedObject);
-
-            realm.commitTransaction(); //Close the transaction
-            if (realm != null) {
-                realm.close(); //Close to prevent memory leaks
-            }
+                //Create a realm object using the passedObject argument
+                RealmObject writtenToDatabase = realm.copyToRealm(passedObject);
+                
+                realm.commitTransaction(); //Close the transaction
+                if (realm != null) {
+                        realm.close(); //Close to prevent memory leaks
+                }
         } catch (Exception e){
             e.printStackTrace();
         }
