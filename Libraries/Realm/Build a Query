@@ -1,7 +1,5 @@
 //Builds a query to use in searching through the database
-    public void buildAQuery(Context context){
-        //As usual, create the instance first
-        Realm realm = Realm.getInstance(context);
+    public void buildAQuery(Realm realm){
         //Define a query using the type (POJO type) as the defined.
         //Looks a lot like an ArrayList definition
         RealmQuery<Employee> query = realm.where(Employee.class);
