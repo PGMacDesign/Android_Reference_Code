@@ -1,10 +1,11 @@
 //Third method of insertion, uses copy object
 //Notice the different parameters required here 
-public static void insertIntoDB(Context context, Employee passedObject){
+public static void insertIntoDB(Realm realm, Employee passedObject){
     try { //Method 2, take an existing object and copy it over
-             
-        //Create the enclosed instance first
-        Realm realm = Realm.getInstance(context);
+        /*
+        Make sure that if you are calling the begin transaction OUTISDE of this method, omit this line. 
+        Nested transactions are not allowed in Realm
+        */
         realm.beginTransaction(); //Start the transaction
          
         //Create a realm object using the passedObject argument
