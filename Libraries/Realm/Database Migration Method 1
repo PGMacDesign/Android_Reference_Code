@@ -1,0 +1,7 @@
+//Quickly erase the databsae (migrate)
+
+public static void deleteRealmFileInStorage(Context context){
+    Realm.deleteRealmFile(context);
+}
+
+//NOTE! this is deprecated
