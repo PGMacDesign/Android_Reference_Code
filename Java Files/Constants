@@ -3,13 +3,13 @@
 
 public class Constants {
 
-    //Private context of the actual application to be used when needed
-    private static Context context = MyApplication.getAppContext();
+    	//Private context of the actual application to be used when needed
+    	private static Context context = MyApplication.getAppContext();
 		
 	//Time values in milliseconds
-	public static final int one_second = (1000);
-	public static final int one_minute = (1000*60);
-	public static final int one_hour = (1000*60*60);
-	public static final int one_day = (1000*60*60*24);
+	public static final int ONE_SECOND = (1000);
+	public static final int ONE_MINUTE = (1000*60);
+	public static final int ONE_HOUR = (1000*60*60);
+	public static final int ONE_DAY = (1000*60*60*24);
 
 }
