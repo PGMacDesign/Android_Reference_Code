@@ -1,0 +1,33 @@
+/*
+This is useful for making a class that returns a context instance of your application. 
+I wrote about it in more detail on my blog here: https://pgmacdesign.wordpress.com/2015/07/14/android-myapplication-and-context/
+There is one more bit of code which goes into your manifest, which I will include at the bottom
+*/
+
+public class MyApplication extends Application { 
+ 
+    private static MyApplication sInstance;
+ 
+    public static MyApplication getInstance() {
+        return sInstance;
+    }
+ 
+    public static Context getAppContext() {
+        return sInstance.getApplicationContext();
+    }
+ 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        sInstance = this;
+    }
+}
+
+//This next part goes into your Manifest file. It is required, though options like allowBackup are not.
+//The name has the path leading to the myApplication class within your packages.
+<application
+    android:name=".misc.MyApplication"
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:theme="@style/AppTheme" >
