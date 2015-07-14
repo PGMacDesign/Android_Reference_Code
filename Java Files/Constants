@@ -1,0 +1,15 @@
+//This will contain a plethora of useful constants I have used within a constants class over the years.
+//To access them you simply just call Constants.NAME_OF_VARIABLE and use it as needed.
+
+public class Constants {
+
+    //Private context of the actual application to be used when needed
+    private static Context context = MyApplication.getAppContext();
+		
+	//Time values in milliseconds
+	public static final int one_second = (1000);
+	public static final int one_minute = (1000*60);
+	public static final int one_hour = (1000*60*60);
+	public static final int one_day = (1000*60*60*24);
+
+}
