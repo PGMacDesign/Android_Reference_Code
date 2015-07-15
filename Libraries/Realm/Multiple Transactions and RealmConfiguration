@@ -1,0 +1,57 @@
+//Testing multiple transactions in 1 statement
+public static void testMultipleTransactions(){
+    //Instance it via the config constant
+    Realm realm = Realm.getInstance(Constants.realmConfiguration);
+ 
+    //Create an Employee object
+    Employee employee = new Employee();
+    employee.setSalary(99999.01);
+    employee.setName("Richie Rich");
+ 
+    //Write it to the database
+    realm.beginTransaction();
+    insertIntoDB(realm, employee);
+    realm.commitTransaction();
+ 
+    //Query the database and update the individual one we just entered
+    RealmQuery<Employee> query = realm.where(Employee.class);
+    query.greaterThanOrEqualTo("salary", 99998.99);
+ 
+    //Get the results into a list (Using previous post's code):
+    List<Employee> returnedList = queryTheDatabase(query);
+ 
+    //Next cycle through the list to update results (No enhanced for loop here)
+    for(int i=0; i<returnedList.size(); i++){
+        //As we are changing data, we need to open a transaction here
+        realm.beginTransaction();
+        //Get an object from the returnedList
+        Employee currentEmployee = returnedList.get(i);
+        //Set the new salary
+        currentEmployee.setSalary(100000.01);
+        //Lastly, update the DB (Using previous post's code):
+        insertIntoDB(realm, currentEmployee);
+        realm.commitTransaction();
+    }
+ 
+    //Print the record to make sure it updated (query again)
+    List<Employee> returnedList2 = queryTheDatabase(query);
+    //Enhanced for loop ok here as nothing is beign altered/ changed
+    for(Employee employee1 : returnedList2){
+        System.out.println("Name = " + employee1.getName());
+        System.out.println("Salary = " + employee1.getSalary());
+    }
+ 
+    //In order to call the deleteRealm() method, you need to close
+    //all open instance of Realm beforehand. (Like this)
+    if(realm != null){
+        realm.close();
+    }
+ 
+    //Lastly, delete the Database itself using realmMigration
+    try {
+        Realm.deleteRealm(Constants.realmConfiguration);
+        System.out.println("Deletion completed");
+    } catch (Exception e){
+        e.printStackTrace();
+    }
+}
