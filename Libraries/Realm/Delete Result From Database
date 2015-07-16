@@ -1,0 +1,42 @@
+//Example of deleting code from the database using Realm
+public static void deleteEntryFromDB() {
+    //First create an instance of realm to use
+    //Instance it via the config constant
+    Realm realm = Realm.getInstance(Constants.realmConfiguration);
+ 
+    //Query the database and update the individual one we just entered
+    RealmQuery<Employee> query = realm.where(Employee.class);
+    query.greaterThanOrEqualTo("salary", 99998.99);
+ 
+    //Get the results into a list (Using previous post's code):
+    List<Employee> returnedList = queryTheDatabase(query);
+     
+    /*
+    You could loop through the list (Non-enhanced for loop!)
+    if you wanted a more precise way of deletion, but for now
+    I am simply writing this for example purposes
+     */
+     
+    //As always, any changes must happen during a transaction
+    realm.beginTransaction();
+     
+    //To remove a single entry, you simply do this:
+    returnedList.remove(0); //Remove the entry at position 0
+    returnedList.remove(1); //Position 1
+ 
+    // remove a single object 
+    Employee employee = returnedList.get(5);
+    employee.removeFromRealm();
+     
+    //Or just remove everything from the results
+    returnedList.clear();
+     
+    //Finally, commit your changes
+    realm.commitTransaction();
+     
+    //And close the open realm
+     
+    if(realm != null){
+        realm.close();
+    }
+}
