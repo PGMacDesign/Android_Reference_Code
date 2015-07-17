@@ -1,0 +1,53 @@
+/*
+The RealmChangeListener is a very useful tool that takes an action (of your choosing) upon a change to the database. 
+Below is a sample class that is using some basic code to define the RealmChangeListner.
+Essentially, whenever the DB is changed (Delete, enter new entry, update, etc) it will make a toast to the user that 
+says "Database updated". This has a myriad of uses but I think my favorite one is utilizing interfaces to change 
+other aspects of your application. 
+*/
+public class RealmChangerExample extends Activity{
+
+    //Realm Listener
+    private RealmChangeListener realmListener;
+    //Realm object
+    private Realm realm;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        /*
+        First set the default config. Although we have not done
+        this in the past, we need to here for the listener to work.
+        You will essentially just use that Constants realmconfig we 
+        made to create it.
+         */
+        Realm.setDefaultConfiguration(Constants.realmConfiguration);
+        //This gets the default instance. Could also make a new instance as well
+        realm = Realm.getDefaultInstance();
+        //Set the realmListener here
+        realmListener = new RealmChangeListener() {
+            @Override
+            public void onChange() {
+                //Call your method here you want to update when change occurs
+                testing();
+            }
+        };
+        realm.addChangeListener(realmListener);
+        
+    }
+    
+    //Simple class, just makes a toast when the DB is changed
+    private void testing() {
+        Toast.makeText(this, "Database updated", Toast.LENGTH_SHORT).show();
+    }
+    
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Remove the listener.
+        realm.removeChangeListener(realmListener);
+        // Close the realm instance.
+        realm.close();
+    }
+}
