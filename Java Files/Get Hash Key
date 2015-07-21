@@ -1,5 +1,9 @@
 //Some websites (IE Facebook) require you to sign up using your hashkey. This is an easy way to find it.
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+
     public static void printOutMyHashKey(Context context){
         try {
             PackageInfo info = context.getPackageManager().getPackageInfo(
