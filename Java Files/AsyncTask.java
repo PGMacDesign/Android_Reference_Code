@@ -55,6 +55,58 @@ private class VerySlowTask extends AsyncTask <String, Long, Void> {
 	}//AsyncTask
 	
 
+//This is another example just to show different parameter options:
+    private class AsyncBackgroundTask extends AsyncTask<Void, Void, List<String>> {
+
+        //Constructor variable, a URL for web searching
+        private String url;
+
+        //Constructor. Optional if you want more custom arguments.
+        public AsyncBackgroundTask(String url){
+            this.url = url;
+        }
+
+        // can use UI thread here
+        protected void onPreExecute() {
+            //Adjust dialogs here (IE, "starting")
+        }
+
+        // automatically done on worker thread (separate from UI thread)
+        protected List<String> doInBackground(final Void... args) {
+            List<String> returnedList = new ArrayList<>();
+            try {
+                /*
+                Here is where you would run a task to fetch data. This
+                is running in the background, NOT on the main UI thread
+                so it will not impact the loading screen for the user.
+                Furthermore, this will automatically pass the completed
+                List of Strings out of the method and pass it into the
+                onPostExecute method so it can then be used to update
+                the interface. I am going to simple have some dummy
+                data here for Strings for example
+                 */
+                returnedList.add("Item 1");
+                returnedList.add("Item 2");
+                returnedList.add("Item 3");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return returnedList;
+        }
+
+        // periodic updates - use this to update a progress bar/ progress dialogue
+        @Override
+        protected void onProgressUpdate(Void... args) {
+            super.onProgressUpdate(args);
+            //Update progress bar or loader bar
+        }
+
+        // Finalize, use passed values, update UI Components
+        protected void onPostExecute(List<String> completedList) {
+            onDataLoaded(completedList); //Pass into the interface
+            //Edit the EditTexts/ TextViews/ Images here
+        }
+    }//End AsyncTask
 
 
 
