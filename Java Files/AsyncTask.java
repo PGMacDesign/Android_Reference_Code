@@ -109,7 +109,7 @@ private class VerySlowTask extends AsyncTask <String, Long, Void> {
     }//End AsyncTask
 
 //These are all of the methods available within AsyncTask, though we only use 2-4 of them:
-private class AsyncExample extends AsyncTask&lt;Void, Void, Void&gt;{
+private class AsyncExample extends AsyncTask<Void, Void, Void>{
     public AsyncExample() {
         super();
     }
