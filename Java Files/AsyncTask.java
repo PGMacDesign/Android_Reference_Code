@@ -108,6 +108,45 @@ private class VerySlowTask extends AsyncTask <String, Long, Void> {
         }
     }//End AsyncTask
 
+//These are all of the methods available within AsyncTask, though we only use 2-4 of them:
+private class AsyncExample extends AsyncTask&lt;Void, Void, Void&gt;{
+    public AsyncExample() {
+        super();
+    }
+ 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+ 
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+    }
+ 
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+    }
+ 
+    @Override
+    protected void onCancelled(Void aVoid) {
+        super.onCancelled(aVoid);
+    }
+ 
+    @Override
+    protected void onCancelled() {
+        super.onCancelled();
+    }
+ 
+    @Override
+    protected Void doInBackground(Void... params) {
+        return null;
+    }
+}
+
+//This is the breakdown of the variable parameters up top that can go in:
+
 
 
 
