@@ -146,7 +146,34 @@ private class AsyncExample extends AsyncTask<Void, Void, Void>{
 }
 
 //This is the breakdown of the variable parameters up top that can go in:
+private class MyTask extends AsyncTask<X, Y, Z>{
 
+    protected void onPreExecute(){
+
+    }
+
+    protected Z doInBackground(X...x){
+
+    }
+
+    protected void onProgressUpdate(Y y){
+
+    }
+
+   protected void onPostExecute(Z z){
+
+    }
+}
+/*
+ X – The type of the input variables value you want to 
+set to the background process. This can be an array of objects.
+
+ Y – The type of the objects you are going to enter in 
+the onProgressUpdate method.
+
+ Z – The type of the result from the operations you have 
+done in the background process.
+*/
 
 
 
