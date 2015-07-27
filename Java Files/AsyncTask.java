@@ -108,6 +108,35 @@ private class VerySlowTask extends AsyncTask <String, Long, Void> {
         }
     }//End AsyncTask
 
+//This is an example of an AsyncExample that will block the UI Thread when run. Be VERY cautious in using it.
+    //This async class sends data to the server and returns a JSON string
+    public static class AsyncExample extends AsyncTask<Void, Void, String>{
+
+        protected String doInBackground(Void... params) {
+            /*
+            Some background operation happens here to generate
+            data. Let's assume we finished by acquiring a String.
+             */
+            String myStr = "This is to be returned";
+
+            return myStr;
+        }
+    }
+
+    //To use the above code 
+    public static void useAsyncExample(Context context){
+        try {
+            Toast.makeText(context, "Starting AsyncExample", Toast.LENGTH_LONG).show();
+            String returnedString = "";
+            returnedString = new AsyncExample().execute().get();
+            Toast.makeText(context, returnedString, Toast.LENGTH_LONG).show();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+    }
+
 //These are all of the methods available within AsyncTask, though we only use 2-4 of them:
 private class AsyncExample extends AsyncTask<Void, Void, Void>{
     public AsyncExample() {
