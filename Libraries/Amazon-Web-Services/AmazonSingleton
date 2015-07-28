@@ -1,0 +1,44 @@
+
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.regions.Region;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3Client;
+
+/**
+ * Singleton class for getting S3 Instances
+ * Created by pmacdowell on 7/22/2015.
+ */
+public class AmazonSingleton {
+
+    private static AmazonSingleton sInstance = null;
+    private static AmazonS3Client s3;
+    private static Context context;
+
+    //Private Constructor
+    private AmazonSingleton(){
+
+        //AmazonS3Client
+        this.s3 = new AmazonS3Client(new BasicAWSCredentials(Constants.AWS_ACCESS_KEY, Constants.AWS_SECRET_ACCESS_KEY ));
+        Region usWest1 = Region.getRegion(Regions.US_WEST_1);
+        this.s3.setRegion(usWest1);
+
+        //Context
+        this.context = MyApplication.getAppContext(); //Need to implement the myApplication class here in another section
+    }
+
+    //Static method, Returns an instance of the Singleton class
+    public static AmazonSingleton getInstance(){
+        if (sInstance == null){
+            sInstance = new AmazonSingleton();
+        }
+        return sInstance;
+    }
+
+    public AmazonS3Client getS3() {
+        return s3;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+}
