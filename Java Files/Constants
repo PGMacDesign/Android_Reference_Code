@@ -11,5 +11,8 @@ public class Constants {
 	public static final int ONE_MINUTE = (1000*60);
 	public static final int ONE_HOUR = (1000*60*60);
 	public static final int ONE_DAY = (1000*60*60*24);
+	
+	//API Key for whatever project I am working on
+	public static final String API_KEY = "fffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
 
 }
