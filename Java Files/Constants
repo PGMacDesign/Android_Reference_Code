@@ -15,4 +15,14 @@ public class Constants {
 	//API Key for whatever project I am working on
 	public static final String API_KEY = "fffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
 
+	//Shared preferences
+	public static final String PREFS_NAME = "packagename.prefs";
+	
+	//For image Rotation calls
+	public static final int ROTATE_CLOCKWISE = 90;
+	public static final int ROTATE_COUNTERCLOCKWISE = 270;
+
+	//For Orientation
+	public static final int ORIENTATION_VERTICAL = 0;
+	public static final int ORIENTATION_HORIZONTAL = 1;
 }
