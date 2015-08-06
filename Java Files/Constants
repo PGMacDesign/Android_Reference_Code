@@ -25,4 +25,11 @@ public class Constants {
 	//For Orientation
 	public static final int ORIENTATION_VERTICAL = 0;
 	public static final int ORIENTATION_HORIZONTAL = 1;
+	
+	//For the database, config using Realm
+    	public static final RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(context)
+            .name("pgmacdesign.db")
+            .schemaVersion(1)
+            .deleteRealmIfMigrationNeeded() //This will delete automatically if needed!
+            .build();
 }
