@@ -34,6 +34,7 @@ public class Constants {
             .build();
             
         //This is a unique tag, useful when trying to make something that can be quickly identified
-        public static final String UNIQUE_TAG = "This is unique. No, seriously             it is. In fact; if we add extra stuff like 787ggyh65 f5 it will make it even more unique!";
+        public static final String UNIQUE_TAG = "This is unique. No, seriously             it is. In fact;     " 
+        + "if we add extra stuff like 787ggyh65 f5 it will make it even more unique!";
         
 }
