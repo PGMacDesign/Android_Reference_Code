@@ -1,4 +1,7 @@
-//This is my L class. I use it in most of my projects, it is just a class I put into a misc folder that allos me to use shortcuts for calls. 
+/*
+This is my L class. I use it in most of my projects, it is just a class I put into a misc folder that allows me to 
+use shortcuts for calls; IE, L.m("hi!");   //   L.toast(this, "nope" + 222);   //   L.Toast(getActivity, true); 
+*/
 
 public class L {
 
