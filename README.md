@@ -8,5 +8,6 @@ Things I will include:
 2) XML Files
 3) Templates
 4) Groupings of related sections (IE JSON Parsing / Storage systems)
+5) Library summaries, uses, and examples
 
-XML Templates (They should be in folders) are on the way!
+
