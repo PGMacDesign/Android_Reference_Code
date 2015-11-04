@@ -1,0 +1,10 @@
+//This is just a simple posting for log statements that is really easy to find / locate:
+
+try {
+        L.m("\n\n╔══════ query execution stats ═══════");
+        L.m("║    " + "Something here");
+        L.m("║    " + "Something here");
+        L.m("╚════════════════════════════════════");
+        
+  } catch (Exception e){
+  }
